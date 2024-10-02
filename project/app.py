@@ -102,6 +102,7 @@ def login_required(f):
 
     return decorated_function
 
+
 @app.route("/delete/<int:post_id>", methods=["GET"])
 @login_required
 def delete_entry(post_id):
