@@ -85,8 +85,8 @@ def logout():
 
 
 # # push context manually to app
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
 
 
 @app.route("/search/", methods=["GET"])

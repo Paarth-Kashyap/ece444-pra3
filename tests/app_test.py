@@ -85,3 +85,21 @@ def test_delete_message(client):
     rv = client.get("/delete/1")
     data = json.loads(rv.data)
     assert data["status"] == 1
+
+#added new test
+def test_search(client):
+    """Ensure the search works"""
+    # Ensure we have some messages in the database
+    test_messages(client)
+
+    # Now, we can test the search
+    rv = client.get("/search/?query=hello")
+    
+    # Print the response data for debugging
+    print(rv.data)  # See what the response contains
+
+    # Check the assertions
+    assert b"No entries found" not in rv.data
+    assert b"&lt;Hello&gt;" in rv.data
+    assert b "<strong>HTML</strong> allowed here" in rv.data
+
