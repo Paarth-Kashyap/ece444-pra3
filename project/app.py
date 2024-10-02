@@ -84,17 +84,13 @@ def logout():
     flash("You were logged out")
     return redirect(url_for("index"))
 
-@app.route("/search", methods=["GET"])
+@app.route("/search/", methods=["GET"])
 def search():
-    from project.app import models  # Import models here
     query = request.args.get("query")
     entries = db.session.query(models.Post)
     if query:
-        entries = entries.filter(
-            models.Post.title.contains(query) | models.Post.text.contains(query)
-        )
-    entries = entries.all()  # This retrieves all matching entries
-    return render_template("search.html", entries=entries, query=query)
+        return render_template('search.html', entries=entries, query=query)
+    return render_template('search.html')
 
 def login_required(f):
     @wraps(f)
