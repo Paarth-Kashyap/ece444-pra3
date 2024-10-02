@@ -47,7 +47,6 @@ with app.app_context():
 
 
 
-
 @app.route("/")
 def index():
     """Searches the database for entries, then displays them."""
@@ -91,10 +90,7 @@ def logout():
     return redirect(url_for("index"))
 
 
-
-
-
-@app.route("/search/", methods=["GET"])
+@app.route("/search", methods=["GET"])
 def search():
     query = request.args.get("query")
     entries = db.session.query(models.Post)
