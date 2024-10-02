@@ -31,6 +31,8 @@ if url.startswith("postgres://"):
 SQLALCHEMY_DATABASE_URI = url
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+
+
 # create and initialize a new Flask app
 app = Flask(__name__)
 # load the config
@@ -38,7 +40,12 @@ app.config.from_object(__name__)
 # init sqlalchemy
 db = SQLAlchemy(app)
 
-from project import models
+from project.app import models
+# push context manually to app
+with app.app_context():
+    db.create_all()
+
+
 
 
 @app.route("/")
@@ -84,9 +91,7 @@ def logout():
     return redirect(url_for("index"))
 
 
-# # push context manually to app
-with app.app_context():
-    db.create_all()
+
 
 
 @app.route("/search/", methods=["GET"])
