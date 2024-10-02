@@ -19,9 +19,13 @@
       </a>
 
       {% if not session.logged_in %}
-      <a class="btn btn-success" role="button" href="{{ url_for('login') }}">log in</a>
+      <a class="btn btn-success" role="button" href="{{ url_for('login') }}"
+        >log in</a
+      >
       {% else %}
-      <a class="btn btn-warning" role="button" href="{{ url_for('logout') }}">log out</a>
+      <a class="btn btn-warning" role="button" href="{{ url_for('logout') }}"
+        >log out</a
+      >
       {% endif %}
 
       <br /><br />
@@ -44,21 +48,15 @@
       </form>
 
       <ul class="entries">
-        {% for entry in entries %}
-          {% if query.lower() in entry.title.lower() or query.lower() in entry.text.lower() %}
-          <li class="entry">
-            <h2 id="{{ entry.post_id }}">{{ entry.title }}</h2>
-            {{ entry.text }}
-          </li>
-          {% endif %}
-        {% endfor %}
+        {% for entry in entries %} {% if query.lower() in entry.title.lower() or
+        query.lower() in entry.text.lower() %}
+        <li class="entry">
+          <h2 id="{{ entry.post_id }}">{{ entry.title }}</h2>
+          {{ entry.text|safe }}
+        </li>
+        {% endif %} {% endfor %}
       </ul>
-
-      {% if not entries|length %}
-      <p>No entries found. Add some!</p>
-      {% endif %}
     </div>
-
     <script
       type="text/javascript"
       src="{{url_for('static', filename='main.js') }}"
